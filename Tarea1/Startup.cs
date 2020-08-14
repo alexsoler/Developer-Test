@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Tarea1.Interfaces;
+using Tarea1.Services;
+using Tarea1.Utils;
 
 namespace Tarea1
 {
@@ -26,6 +29,12 @@ namespace Tarea1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddRouting(options => {
+                options.ConstraintMap.Add("currencyValid", typeof(CurrencyConstraint));
+            });
+
+            services.AddSingleton<ICurrencyService, CurrencyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
